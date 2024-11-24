@@ -7,14 +7,6 @@ assignees: ''
 
 ---
 
----
-name: "🐞bug"
-about: 버그를 수정합니다.
-title: "🐞bug: 이슈내용"
-labels: 🐞bug
-assignees: ""
----
-
 ## 버그 설명
 
 > 발생한 버그에 대해 설명해주세요.

@@ -7,14 +7,6 @@ assignees: ''
 
 ---
 
----
-name: "✨feat"
-about: 새로운 기능을 추가합니다.
-title: "✨feat: 이슈내용"
-labels: ✨feat
-assignees: ""
----
-
 ## 어떤 기능인가요?
 
 > 추가하려는 기능에 대해 설명해주세요.
