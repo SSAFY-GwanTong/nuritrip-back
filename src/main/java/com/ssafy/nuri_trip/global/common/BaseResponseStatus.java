@@ -29,10 +29,9 @@ public enum BaseResponseStatus {
     USERS_EMPTY_USER_ID(false, HttpStatus.BAD_REQUEST.value(), "유저 아이디 값을 확인해주세요."),
     USER_NOT_FOUND(false, HttpStatus.NOT_FOUND.value(), "유저가 존재하지 않습니다."),
     // [POST] /users
-    POST_USERS_EMPTY_EMAIL(false, HttpStatus.BAD_REQUEST.value(), "이메일을 입력해주세요."),
-    POST_USERS_INVALID_EMAIL(false, HttpStatus.BAD_REQUEST.value(), "이메일 형식을 확인해주세요."),
-    POST_USERS_EXISTS_EMAIL(false,HttpStatus.BAD_REQUEST.value(),"중복된 이메일입니다."),
-    FAILED_TO_LOGIN(false,HttpStatus.NOT_FOUND.value(),"없는 아이디거나 비밀번호가 틀렸습니다."),
+    POST_USERS_EMPTY_ID(false, HttpStatus.BAD_REQUEST.value(), "아이디를 입력해주세요."),
+    POST_USERS_EXISTS_ID(false,HttpStatus.BAD_REQUEST.value(),"중복된 아이디입니다."),
+    FAILED_TO_LOGIN(false,HttpStatus.UNAUTHORIZED.value(),"없는 아이디거나 비밀번호가 틀렸습니다."),
 
 
 
