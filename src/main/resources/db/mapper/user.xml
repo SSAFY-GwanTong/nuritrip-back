@@ -4,11 +4,8 @@
     <select id="selectByUserId" resultMap="userResultMap">
         select * from user where user_id=#{userId}
     </select>
-    <select id="select" resultMap="userBase">
-        select * from user where id=#{userId}
-    </select>
 
-    <resultMap type="user" id="userResultMap">
+    <resultMap type="com.ssafy.nuri_trip.domain.user.dto.User" id="userResultMap">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="password" property="password"/>
