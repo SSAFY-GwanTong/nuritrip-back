@@ -67,8 +67,18 @@ public class UserService {
     /**
      * 계획 관련 기능
      */
-    public List<GetPlansRes> getPlansByUserId(Long userId) throws BaseException{
-        List<GetPlansRes> plans = userPlanRepo.selectByUserId(userId);
+    public List<GetAllPlansRes> getPlansByUserId(Long userId) throws BaseException{
+        List<GetAllPlansRes> plans = userPlanRepo.selectByUserId(userId);
         return plans;
+    }
+
+    public List<DetailPlan> getPlanByUserPlanId(Long userPlanId) throws BaseException{
+        List<DetailPlan> plan = userPlanRepo.selectByUserPlanId(userPlanId);
+        for(DetailPlan detailPlan : plan){
+            Long contentId = detailPlan.getContentId();
+            Mission mission = userMissionRepo.selectByUserPlanId(userPlanId, contentId);
+            detailPlan.setMission(mission);
+        }
+        return plan;
     }
 }

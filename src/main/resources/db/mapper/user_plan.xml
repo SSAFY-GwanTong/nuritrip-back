@@ -4,7 +4,7 @@
     <select id="selectByUserId" resultMap="GetPlansResResultMap">
         select * from user_plan where user_id=#{userId}
     </select>
-    <resultMap type="com.ssafy.nuri_trip.domain.user.dto.GetPlansRes" id="GetPlansResResultMap">
+    <resultMap type="com.ssafy.nuri_trip.domain.user.dto.GetAllPlansRes" id="GetPlansResResultMap">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="image" property="image"/>

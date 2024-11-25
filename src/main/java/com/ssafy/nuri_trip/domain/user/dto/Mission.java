@@ -2,17 +2,19 @@ package com.ssafy.nuri_trip.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetPlansRes {
+@RequiredArgsConstructor
+public class Mission {
     private Long id;
     private String title;
-    private String image;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private boolean status;
+    private int level;
+    private List<String> fitnessTypes;
 }

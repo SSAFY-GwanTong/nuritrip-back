@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
         reg.addInterceptor(new AuthenticationInterceptor(jwtService, objectMapper))
                 .order(1)
                 .addPathPatterns("/**")    //interceptor 작업이 필요한 path 모두 추가
-                .excludePathPatterns("/api/auth/**");
+                .excludePathPatterns("/api/auth/**", "/error");
     }
 
 }
