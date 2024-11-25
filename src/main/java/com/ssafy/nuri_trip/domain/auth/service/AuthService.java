@@ -24,6 +24,8 @@ public class AuthService {
         String userId = loginReq.getId();
         User user = userRepo.selectByUserId(userId);
         String encodedPassword = passwordEncoder.encode(loginReq.getPassword());
+        System.out.println(loginReq.getPassword());
+        System.out.println(encodedPassword);
         if(user!= null && encodedPassword.equals(user.getPassword())){
             Long id = user.getId();
             String jwtToken = jwtService.createJwt(id);

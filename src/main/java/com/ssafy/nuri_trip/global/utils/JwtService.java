@@ -81,7 +81,6 @@ public class JwtService {
             throw new BaseException(INVALID_JWT);
         } catch(SignatureException e){
             //서명이 올바르지 않은 경우
-            System.out.println(e.getMessage());
             throw new BaseException(INVALID_JWT);
         } catch(Exception e){
             System.out.println(e.getMessage());

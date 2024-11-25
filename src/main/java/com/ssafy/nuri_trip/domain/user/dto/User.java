@@ -1,10 +1,13 @@
 package com.ssafy.nuri_trip.domain.user.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 public class User {
     private Long id;
     private String userId;
