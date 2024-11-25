@@ -1,9 +1,6 @@
 package com.ssafy.nuri_trip.domain.user.controller;
 
-import com.ssafy.nuri_trip.domain.user.dto.DetailPlan;
-import com.ssafy.nuri_trip.domain.user.dto.GetMissionsRes;
-import com.ssafy.nuri_trip.domain.user.dto.SignUpReq;
-import com.ssafy.nuri_trip.domain.user.dto.GetAllPlansRes;
+import com.ssafy.nuri_trip.domain.user.dto.*;
 import com.ssafy.nuri_trip.domain.user.service.UserService;
 import com.ssafy.nuri_trip.global.common.BaseException;
 import com.ssafy.nuri_trip.global.common.BaseResponse;
@@ -77,6 +74,17 @@ public class UserController extends AbstractRestController {
         try{
             List<DetailPlan> result = service.getPlanByUserPlanId(userPlanId);
             return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+    @PostMapping("my/plans")
+    public ResponseEntity<BaseResponse<?>> registerPlan(@RequestAttribute("userId") Long userId,
+                                                        @RequestBody RegisterPlanReq registerPlanReq){
+        try{
+            service.registerPlan(userId, registerPlanReq);
+            return handleSuccess(null);
         }catch(BaseException e){
             return handleException(e.getStatus());
         }

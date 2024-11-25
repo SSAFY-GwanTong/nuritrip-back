@@ -8,6 +8,7 @@ import com.ssafy.nuri_trip.global.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,5 +81,19 @@ public class UserService {
             detailPlan.setMission(mission);
         }
         return plan;
+    }
+    @Transactional
+    public void registerPlan(Long userId, RegisterPlanReq registerPlanReq) throws BaseException{
+        PostPlan plan = PostPlan.builder()
+                                .userId(userId)
+                                .title(registerPlanReq.getTitle())
+                                .image(registerPlanReq.getImage())
+                                .endDate(registerPlanReq.getEndDate())
+                                .startDate(registerPlanReq.getStartDate())
+                                .build();
+        userPlanRepo.insertPlan(plan);
+        Long userPlanId = plan.getId();
+        int res = userPlanRepo.insertDetailPlans(userPlanId, registerPlanReq.getDetailPlan());
+        System.out.println("detail plan : " + res + "개 들어감");
     }
 }
