@@ -18,4 +18,10 @@
         insert into fitness_measurement (value, level, fitness_type_id, user_id)
         value(#{value}, #{level}, #{fitnessTypeId}, #{userId})
     </insert>
+
+    <update id="updateFitnessMeasurement" parameterType="com.ssafy.nuri_trip.domain.user.dto.FitnessMeasurementReq">
+        update fitness_measurement
+        set value = #{value}, level = #{level}
+        where user_id=#{userId} and fitness_type_id=#{fitnessTypeId}
+    </update>
 </mapper>

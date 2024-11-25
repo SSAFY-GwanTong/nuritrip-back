@@ -114,4 +114,16 @@ public class UserController extends AbstractRestController {
             return handleException(e.getStatus());
         }
     }
+
+    @PatchMapping("/my/fitness-measurement")
+    public ResponseEntity<BaseResponse<?>> updateFitnessMeasurement(@RequestAttribute("userId") Long userId,
+                                                                  @RequestBody FitnessMeasurementReq req){
+        try{
+            req.setUserId(userId);
+            service.updateFitnessMeasurement(req);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
 }

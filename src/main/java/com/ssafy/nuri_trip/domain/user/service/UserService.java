@@ -120,4 +120,22 @@ public class UserService {
         }
         fitnessRepo.insertFitnessMeasurement(req);
     }
+
+    public void updateFitnessMeasurement(FitnessMeasurementReq req) throws BaseException{
+        FitnessType type = fitnessRepo.selectFitnessTypeById(req.getFitnessTypeId());
+        int value = req.getValue();
+        if(value < type.getLevel1()){
+            req.setLevel(1);
+        }else if(value<type.getLevel2()){
+            req.setLevel(2);
+        }else if(value<type.getLevel3()){
+            req.setLevel(3);
+        }else if(value<type.getLevel4()){
+            req.setLevel(4);
+        }else{
+            req.setLevel(5);
+        }
+        fitnessRepo.updateFitnessMeasurement(req);
+    }
+
 }
