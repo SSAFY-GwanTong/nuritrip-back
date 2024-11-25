@@ -1,6 +1,7 @@
 package com.ssafy.nuri_trip.domain.user.service;
 
 import com.ssafy.nuri_trip.domain.user.dto.*;
+import com.ssafy.nuri_trip.domain.user.repository.FitnessRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserMissionRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserPlanRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserRepository;
@@ -23,6 +24,7 @@ public class UserService {
     private final UserRepository userRepo;
     private final UserMissionRepository userMissionRepo;
     private final UserPlanRepository userPlanRepo;
+    private final FitnessRepository fitnessRepo;
 
     public void register(SignUpReq signUpReq) throws BaseException{
         User findUserByUserId = userRepo.selectByUserId(signUpReq.getUserId());
@@ -96,4 +98,44 @@ public class UserService {
         int res = userPlanRepo.insertDetailPlans(userPlanId, registerPlanReq.getDetailPlan());
         System.out.println("detail plan : " + res + "개 들어감");
     }
+
+    public List<Fitness> getFitness(Long userId) throws BaseException{
+        List<Fitness> res = fitnessRepo.selectFitnessByUserId(userId);
+        return res;
+    }
+
+    public void postFitnessMeasurement(FitnessMeasurementReq req) throws BaseException{
+        FitnessType type = fitnessRepo.selectFitnessTypeById(req.getFitnessTypeId());
+        int value = req.getValue();
+        if(value < type.getLevel1()){
+            req.setLevel(1);
+        }else if(value<type.getLevel2()){
+            req.setLevel(2);
+        }else if(value<type.getLevel3()){
+            req.setLevel(3);
+        }else if(value<type.getLevel4()){
+            req.setLevel(4);
+        }else{
+            req.setLevel(5);
+        }
+        fitnessRepo.insertFitnessMeasurement(req);
+    }
+
+    public void updateFitnessMeasurement(FitnessMeasurementReq req) throws BaseException{
+        FitnessType type = fitnessRepo.selectFitnessTypeById(req.getFitnessTypeId());
+        int value = req.getValue();
+        if(value < type.getLevel1()){
+            req.setLevel(1);
+        }else if(value<type.getLevel2()){
+            req.setLevel(2);
+        }else if(value<type.getLevel3()){
+            req.setLevel(3);
+        }else if(value<type.getLevel4()){
+            req.setLevel(4);
+        }else{
+            req.setLevel(5);
+        }
+        fitnessRepo.updateFitnessMeasurement(req);
+    }
+
 }

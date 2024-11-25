@@ -90,4 +90,40 @@ public class UserController extends AbstractRestController {
         }
     }
 
+    /**
+     * 체력 관련 기능
+     */
+    @GetMapping("/my/fitness")
+    public ResponseEntity<BaseResponse<?>> getFitness(@RequestAttribute("userId") Long userId){
+        try{
+            List<Fitness> result = service.getFitness(userId);
+            return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+    @PostMapping("/my/fitness-measurement")
+    public ResponseEntity<BaseResponse<?>> postFitnessMeasurement(@RequestAttribute("userId") Long userId,
+                                                                  @RequestBody FitnessMeasurementReq req){
+        try{
+            req.setUserId(userId);
+            service.postFitnessMeasurement(req);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+    @PatchMapping("/my/fitness-measurement")
+    public ResponseEntity<BaseResponse<?>> updateFitnessMeasurement(@RequestAttribute("userId") Long userId,
+                                                                  @RequestBody FitnessMeasurementReq req){
+        try{
+            req.setUserId(userId);
+            service.updateFitnessMeasurement(req);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
 }
