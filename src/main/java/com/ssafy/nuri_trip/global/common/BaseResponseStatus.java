@@ -33,6 +33,8 @@ public enum BaseResponseStatus {
     POST_USERS_EXISTS_ID(false,HttpStatus.BAD_REQUEST.value(),"중복된 아이디입니다."),
     FAILED_TO_LOGIN(false,HttpStatus.UNAUTHORIZED.value(),"없는 아이디거나 비밀번호가 틀렸습니다."),
 
+    // missions
+    MISSION_NOT_FOUND(false, HttpStatus.NOT_FOUND.value(),"미션이 존재하지 않습니다."),
 
 
     /**

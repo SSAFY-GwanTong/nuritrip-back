@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ssafy.nuri_trip.global.common.BaseResponseStatus.DATABASE_ERROR;
-import static com.ssafy.nuri_trip.global.common.BaseResponseStatus.POST_USERS_EXISTS_ID;
+import static com.ssafy.nuri_trip.global.common.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +53,12 @@ public class UserService {
             results.add(getMissionsRes);
         }
         return results;
+    }
+
+    public void updateMissionStatus(Long userId, Long missionId, boolean status) throws BaseException{
+        int res = userMissionRepo.updateStatus(userId, missionId, status);
+        if(res != 1){
+            throw new BaseException(MISSION_NOT_FOUND);
+        }
     }
 }

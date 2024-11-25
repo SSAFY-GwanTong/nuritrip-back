@@ -44,6 +44,16 @@ public class UserController extends AbstractRestController {
         }
     }
 
-
+    @PatchMapping("/my/missions/{mission_id}/status/{status}")
+    public ResponseEntity<BaseResponse<?>> updateMissionStatus(@RequestAttribute("userId") Long userId,
+                                                               @PathVariable("mission_id") Long missionId,
+                                                               @PathVariable("status") boolean status){
+        try{
+            service.updateMissionStatus(userId, missionId, status);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
 
 }

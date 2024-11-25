@@ -20,4 +20,10 @@
         GROUP BY
             m.id
     </select>
+
+    <update id="updateStatus" parameterType="com.ssafy.nuri_trip.domain.user.dto.UserMission">
+        UPDATE user_mission
+        SET status = #{status}
+        WHERE user_id = #{userId} and mission_id = #{missionId}
+    </update>
 </mapper>
