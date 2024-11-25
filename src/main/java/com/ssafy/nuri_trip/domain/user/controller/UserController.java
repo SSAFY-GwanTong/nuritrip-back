@@ -2,6 +2,7 @@ package com.ssafy.nuri_trip.domain.user.controller;
 
 import com.ssafy.nuri_trip.domain.user.dto.GetMissionsRes;
 import com.ssafy.nuri_trip.domain.user.dto.SignUpReq;
+import com.ssafy.nuri_trip.domain.user.dto.GetPlansRes;
 import com.ssafy.nuri_trip.domain.user.service.UserService;
 import com.ssafy.nuri_trip.global.common.BaseException;
 import com.ssafy.nuri_trip.global.common.BaseResponse;
@@ -55,5 +56,20 @@ public class UserController extends AbstractRestController {
             return handleException(e.getStatus());
         }
     }
+
+    /**
+     * 유저 계획 관련 기능
+     */
+    @GetMapping("/my/plans")
+    public ResponseEntity<BaseResponse<?>> getPlans(@RequestAttribute("userId") Long userId){
+        try{
+            List<GetPlansRes> result = service.getPlansByUserId(userId);
+            return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+
+    }
+
 
 }
