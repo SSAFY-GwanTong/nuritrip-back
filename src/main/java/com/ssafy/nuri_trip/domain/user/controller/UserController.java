@@ -90,4 +90,18 @@ public class UserController extends AbstractRestController {
         }
     }
 
+    /**
+     * 체력 관련 기능
+     */
+    @GetMapping("/my/fitness")
+    public ResponseEntity<BaseResponse<?>> getFitness(@RequestAttribute("userId") Long userId){
+        try{
+            List<Fitness> result = service.getFitness(userId);
+            return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+
 }

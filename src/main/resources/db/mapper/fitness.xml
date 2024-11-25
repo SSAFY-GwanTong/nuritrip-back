@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.nuri_trip.domain.user.repository.FitnessRepository">
+    <select id="selectFitnessByUserId" resultType="com.ssafy.nuri_trip.domain.user.dto.Fitness">
+        select
+            ft.id as id,
+            ft.name as name,
+            ut.point as point
+        from user_fitness ut
+            join fitness_type ft
+                on ut.fitness_type_id = ft.id
+        where ut.user_id = #{userId} and ft.id &lt; 8;
+    </select>
+</mapper>

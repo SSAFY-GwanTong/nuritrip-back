@@ -1,6 +1,7 @@
 package com.ssafy.nuri_trip.domain.user.service;
 
 import com.ssafy.nuri_trip.domain.user.dto.*;
+import com.ssafy.nuri_trip.domain.user.repository.FitnessRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserMissionRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserPlanRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserRepository;
@@ -23,6 +24,7 @@ public class UserService {
     private final UserRepository userRepo;
     private final UserMissionRepository userMissionRepo;
     private final UserPlanRepository userPlanRepo;
+    private final FitnessRepository fitnessRepo;
 
     public void register(SignUpReq signUpReq) throws BaseException{
         User findUserByUserId = userRepo.selectByUserId(signUpReq.getUserId());
@@ -95,5 +97,10 @@ public class UserService {
         Long userPlanId = plan.getId();
         int res = userPlanRepo.insertDetailPlans(userPlanId, registerPlanReq.getDetailPlan());
         System.out.println("detail plan : " + res + "개 들어감");
+    }
+
+    public List<Fitness> getFitness(Long userId) throws BaseException{
+        List<Fitness> res = fitnessRepo.selectFitnessByUserId(userId);
+        return res;
     }
 }
