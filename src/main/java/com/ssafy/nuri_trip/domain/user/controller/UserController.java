@@ -1,5 +1,6 @@
 package com.ssafy.nuri_trip.domain.user.controller;
 
+import com.ssafy.nuri_trip.domain.user.dto.GetMissionsRes;
 import com.ssafy.nuri_trip.domain.user.dto.SignUpReq;
 import com.ssafy.nuri_trip.domain.user.service.UserService;
 import com.ssafy.nuri_trip.global.common.BaseException;
@@ -9,6 +10,8 @@ import com.ssafy.nuri_trip.global.controller.AbstractRestController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -31,7 +34,15 @@ public class UserController extends AbstractRestController {
     /**
      * 유저 미션 관련 기능
      */
-
+    @GetMapping("/my/missions")
+    public ResponseEntity<BaseResponse<?>> getMissions(@RequestAttribute("userId") Long userId){
+        try{
+            List<GetMissionsRes> result = service.getCompletedMissions(userId);
+            return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
 
 
 
