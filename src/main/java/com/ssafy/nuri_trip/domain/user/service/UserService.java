@@ -1,15 +1,14 @@
 package com.ssafy.nuri_trip.domain.user.service;
 
-import com.ssafy.nuri_trip.domain.user.dto.CompletedMissions;
-import com.ssafy.nuri_trip.domain.user.dto.GetMissionsRes;
-import com.ssafy.nuri_trip.domain.user.dto.SignUpReq;
-import com.ssafy.nuri_trip.domain.user.dto.User;
+import com.ssafy.nuri_trip.domain.user.dto.*;
 import com.ssafy.nuri_trip.domain.user.repository.UserMissionRepository;
+import com.ssafy.nuri_trip.domain.user.repository.UserPlanRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserRepository;
 import com.ssafy.nuri_trip.global.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +22,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepo;
     private final UserMissionRepository userMissionRepo;
+    private final UserPlanRepository userPlanRepo;
 
     public void register(SignUpReq signUpReq) throws BaseException{
         User findUserByUserId = userRepo.selectByUserId(signUpReq.getUserId());
@@ -41,6 +41,9 @@ public class UserService {
         }
     }
 
+    /**
+     * 미션 관련 기능
+     */
     public List<GetMissionsRes> getCompletedMissions(Long userId) throws BaseException{
         List<CompletedMissions> missions = userMissionRepo.selectCompletedMissionsByUserId(userId);
         List<GetMissionsRes> results = new ArrayList<>();
@@ -60,5 +63,37 @@ public class UserService {
         if(res != 1){
             throw new BaseException(MISSION_NOT_FOUND);
         }
+    }
+
+    /**
+     * 계획 관련 기능
+     */
+    public List<GetAllPlansRes> getPlansByUserId(Long userId) throws BaseException{
+        List<GetAllPlansRes> plans = userPlanRepo.selectByUserId(userId);
+        return plans;
+    }
+
+    public List<DetailPlan> getPlanByUserPlanId(Long userPlanId) throws BaseException{
+        List<DetailPlan> plan = userPlanRepo.selectByUserPlanId(userPlanId);
+        for(DetailPlan detailPlan : plan){
+            Long contentId = detailPlan.getContentId();
+            Mission mission = userMissionRepo.selectByUserPlanId(userPlanId, contentId);
+            detailPlan.setMission(mission);
+        }
+        return plan;
+    }
+    @Transactional
+    public void registerPlan(Long userId, RegisterPlanReq registerPlanReq) throws BaseException{
+        PostPlan plan = PostPlan.builder()
+                                .userId(userId)
+                                .title(registerPlanReq.getTitle())
+                                .image(registerPlanReq.getImage())
+                                .endDate(registerPlanReq.getEndDate())
+                                .startDate(registerPlanReq.getStartDate())
+                                .build();
+        userPlanRepo.insertPlan(plan);
+        Long userPlanId = plan.getId();
+        int res = userPlanRepo.insertDetailPlans(userPlanId, registerPlanReq.getDetailPlan());
+        System.out.println("detail plan : " + res + "개 들어감");
     }
 }

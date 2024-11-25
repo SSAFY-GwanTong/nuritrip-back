@@ -1,6 +1,7 @@
 package com.ssafy.nuri_trip.domain.user.repository;
 
 import com.ssafy.nuri_trip.domain.user.dto.CompletedMissions;
+import com.ssafy.nuri_trip.domain.user.dto.Mission;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
 public interface UserMissionRepository {
     List<CompletedMissions> selectCompletedMissionsByUserId(Long userId);
     int updateStatus(Long userId, Long missionId, boolean status);
+    Mission selectByUserPlanId(Long userPlanId, Long contentId);
 }

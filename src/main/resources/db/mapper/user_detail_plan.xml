@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.nuri_trip.domain.user.repository.UserPlanRepository">
+    <resultMap id="getPlanResMap" type="com.ssafy.nuri_trip.domain.user.dto.DetailPlan">
+        <id property="userDetailPlanId" column="userDetailPlanId"/>
+        <result property="day" column="day"/>
+        <result property="sequence" column="sequence"/>
+        <result property="contentId" column="contentId"/>
+        <result property="attractionName" column="attractionName"/>
+        <result property="imgUrl" column="imgUrl"/>
+        <result property="addr1" column="addr1"/>
+        <result property="addr2" column="addr2"/>
+        <result property="overview" column="overview"/>
+    </resultMap>
+
+    <select id="selectByUserPlanId" resultMap="getPlanResMap">
+        SELECT
+            udp.id AS userDetailPlanId,
+            udp.day,
+            udp.sequence,
+            a.content_id AS contentId,
+            a.title AS attractionName,
+            a.first_image1 AS imgUrl,
+            a.addr1,
+            a.addr2,
+            a.overview
+        FROM
+            user_detail_plan udp
+                JOIN
+            attractions a ON udp.attraction_id = a.content_id
+        WHERE
+            udp.user_plan_id = #{userPlanId}
+    </select>
+
+</mapper>

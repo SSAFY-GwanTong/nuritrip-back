@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.nuri_trip.domain.user.repository.UserPlanRepository">
+    <select id="selectByUserId" resultMap="GetPlansResResultMap">
+        select * from user_plan where user_id=#{userId}
+    </select>
+    <resultMap type="com.ssafy.nuri_trip.domain.user.dto.GetAllPlansRes" id="GetPlansResResultMap">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="image" property="image"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+    </resultMap>
+
+    <insert id="insertPlan" parameterType="com.ssafy.nuri_trip.domain.user.dto.PostPlan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_plan (user_id, title, image, start_date, end_date)
+        value (#{userId},  #{title}, #{image}, #{startDate}, #{endDate})
+    </insert>
+
+    <insert id="insertDetailPlans" parameterType="map">
+        INSERT INTO user_detail_plan (user_plan_id, day, sequence, attraction_id)
+        VALUES
+        <foreach collection="detailPlan" item="detail" separator=",">
+            (#{userPlanId}, #{detail.day}, #{detail.sequence}, #{detail.attractionId})
+        </foreach>
+    </insert>
+</mapper>

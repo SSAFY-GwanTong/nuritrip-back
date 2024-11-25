@@ -1,7 +1,6 @@
 package com.ssafy.nuri_trip.domain.user.controller;
 
-import com.ssafy.nuri_trip.domain.user.dto.GetMissionsRes;
-import com.ssafy.nuri_trip.domain.user.dto.SignUpReq;
+import com.ssafy.nuri_trip.domain.user.dto.*;
 import com.ssafy.nuri_trip.domain.user.service.UserService;
 import com.ssafy.nuri_trip.global.common.BaseException;
 import com.ssafy.nuri_trip.global.common.BaseResponse;
@@ -50,6 +49,41 @@ public class UserController extends AbstractRestController {
                                                                @PathVariable("status") boolean status){
         try{
             service.updateMissionStatus(userId, missionId, status);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+    /**
+     * 유저 계획 관련 기능
+     */
+    @GetMapping("/my/plans")
+    public ResponseEntity<BaseResponse<?>> getAllPlans(@RequestAttribute("userId") Long userId){
+        try{
+            List<GetAllPlansRes> result = service.getPlansByUserId(userId);
+            return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+
+    }
+
+    @GetMapping("my/plans/{user_plan_id}")
+    public ResponseEntity<BaseResponse<?>> getPlan(@PathVariable("user_plan_id") Long userPlanId){
+        try{
+            List<DetailPlan> result = service.getPlanByUserPlanId(userPlanId);
+            return handleSuccess(result);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+    @PostMapping("my/plans")
+    public ResponseEntity<BaseResponse<?>> registerPlan(@RequestAttribute("userId") Long userId,
+                                                        @RequestBody RegisterPlanReq registerPlanReq){
+        try{
+            service.registerPlan(userId, registerPlanReq);
             return handleSuccess(null);
         }catch(BaseException e){
             return handleException(e.getStatus());

@@ -26,4 +26,30 @@
         SET status = #{status}
         WHERE user_id = #{userId} and mission_id = #{missionId}
     </update>
+    <resultMap id="missionResultMap" type="com.ssafy.nuri_trip.domain.user.dto.Mission">
+        <result property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="level" column="level" />
+        <result property="fitnessTypes" column="fitnessTypes" typeHandler="com.ssafy.nuri_trip.global.handler.ListTypeHandler" />
+    </resultMap>
+
+    <select id="selectByUserPlanId" resultMap="missionResultMap">
+        SELECT
+            m.id AS id,
+            m.title AS title,
+            m.level AS level,
+            GROUP_CONCAT(ft.name) AS fitnessTypes
+        FROM
+            user_mission um
+                JOIN
+            mission m ON um.mission_id = m.id
+                JOIN
+            mission_attribute ma ON m.id = ma.mission_id
+                JOIN
+            fitness_type ft ON ma.fitness_type_id = ft.id
+        WHERE
+            um.user_plan_id = #{userPlanId} and m.attraction_id = #{contentId}
+        GROUP BY
+            m.id
+    </select>
 </mapper>
