@@ -11,4 +11,11 @@
                 on ut.fitness_type_id = ft.id
         where ut.user_id = #{userId} and ft.id &lt; 8;
     </select>
+    <select id="selectFitnessTypeById" resultType="com.ssafy.nuri_trip.domain.user.dto.FitnessType">
+        select * from fitness_type where id=#{typeId}
+    </select>
+    <insert id="insertFitnessMeasurement" parameterType="com.ssafy.nuri_trip.domain.user.dto.FitnessMeasurementReq">
+        insert into fitness_measurement (value, level, fitness_type_id, user_id)
+        value(#{value}, #{level}, #{fitnessTypeId}, #{userId})
+    </insert>
 </mapper>

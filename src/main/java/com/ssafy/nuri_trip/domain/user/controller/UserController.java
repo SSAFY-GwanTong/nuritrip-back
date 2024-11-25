@@ -103,5 +103,15 @@ public class UserController extends AbstractRestController {
         }
     }
 
-
+    @PostMapping("/my/fitness-measurement")
+    public ResponseEntity<BaseResponse<?>> postFitnessMeasurement(@RequestAttribute("userId") Long userId,
+                                                                  @RequestBody FitnessMeasurementReq req){
+        try{
+            req.setUserId(userId);
+            service.postFitnessMeasurement(req);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
 }
