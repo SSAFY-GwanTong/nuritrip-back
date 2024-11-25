@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.nuri_trip.domain.user.repository.UserMissionRepository">
+    <select id="selectCompletedMissionsByUserId" resultType="com.ssafy.nuri_trip.domain.user.dto.CompletedMissions">
+        SELECT
+            m.id AS id,
+            m.title AS title,
+            m.level AS level,
+            GROUP_CONCAT(ft.name) AS fitnessTypes
+        FROM
+            user_mission um
+                JOIN
+            mission m ON um.mission_id = m.id
+                JOIN
+            mission_attribute ma ON m.id = ma.mission_id
+                JOIN
+            fitness_type ft ON ma.fitness_type_id = ft.id
+        WHERE
+            um.user_id = #{userId} AND um.status = 1
+        GROUP BY
+            m.id
+    </select>
+
+    <update id="updateStatus" parameterType="com.ssafy.nuri_trip.domain.user.dto.UserMission">
+        UPDATE user_mission
+        SET status = #{status}
+        WHERE user_id = #{userId} and mission_id = #{missionId}
+    </update>
+</mapper>
