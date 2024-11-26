@@ -57,16 +57,35 @@
 <!--                AND a.content_type_id = #{contentTypeId}-->
 <!--            </if>-->
 <!--    </select>-->
-    <select id="selectAttractions"  resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
+    <select id="selectAttractions" resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
         SELECT
-        content_id as contentId, latitude, longitude, title, first_image1 as img, addr1 as address1, addr2 as address2,
-        ct.content_type_name as contentType
+        a.content_id AS contentId,
+        a.latitude,
+        a.longitude,
+        a.title,
+        a.first_image1 AS img,
+        a.addr1 AS address1,
+        a.addr2 AS address2,
+        ct.content_type_name AS contentType,
+        <choose>
+            <when test="userId != null">
+                CASE
+                WHEN ul.user_id IS NOT NULL THEN TRUE
+                ELSE FALSE
+                END AS isLiked
+            </when>
+            <otherwise>
+                FALSE AS isLiked
+            </otherwise>
+        </choose>
         FROM attractions a
-        LEFT JOIN contenttypes ct ON a.content_type_id=ct.content_type_id
-        WHERE
-        1=1
+        LEFT JOIN contenttypes ct ON a.content_type_id = ct.content_type_id
+        <if test="userId != null">
+            LEFT JOIN user_like ul ON a.content_id = ul.attraction_id AND ul.user_id = #{userId}
+        </if>
+        WHERE 1=1
         <if test="sido == null">
-            AND a.area_code =1
+            AND a.area_code = 1
         </if>
         <if test="sido != null">
             AND a.area_code = #{sido}
@@ -79,4 +98,5 @@
         </if>
         LIMIT #{pageSize} OFFSET #{offset}
     </select>
+
 </mapper>
