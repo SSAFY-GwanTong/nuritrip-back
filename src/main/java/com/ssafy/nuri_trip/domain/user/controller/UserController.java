@@ -30,6 +30,16 @@ public class UserController extends AbstractRestController {
         }
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<BaseResponse<?>> getUserInfo(@RequestAttribute("userId") Long userId){
+        try{
+            GetUserInfoRes user = service.getUserInfo(userId);
+            return handleSuccess(user);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
     /**
      * 유저 미션 관련 기능
      */

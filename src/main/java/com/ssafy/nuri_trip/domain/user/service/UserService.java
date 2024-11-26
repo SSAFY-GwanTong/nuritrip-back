@@ -46,6 +46,17 @@ public class UserService {
         }
     }
 
+    public GetUserInfoRes getUserInfo(Long userId) throws BaseException{
+        User user = userRepo.selectById(userId);
+        GetUserInfoRes userInfo = GetUserInfoRes.builder()
+                                                .id(user.getId())
+                                                .name(user.getName())
+                                                .profileImg(user.getProfileImg())
+                                                .strengthLevel(user.getStrengthLevel())
+                                                .build();
+        return userInfo;
+    }
+
     /**
      * 미션 관련 기능
      */

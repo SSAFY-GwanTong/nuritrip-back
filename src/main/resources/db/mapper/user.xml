@@ -4,7 +4,9 @@
     <select id="selectByUserId" resultMap="userResultMap">
         select * from user where user_id=#{userId}
     </select>
-
+    <select id="selectById" resultMap="userResultMap">
+        select * from user where id=#{id}
+    </select>
     <resultMap type="com.ssafy.nuri_trip.domain.user.dto.User" id="userResultMap">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
