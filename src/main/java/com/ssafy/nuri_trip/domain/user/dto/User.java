@@ -14,6 +14,7 @@ public class User {
     private String password;
     private String name;
     private Integer strengthLevel;
+    private Character gender;
     private Integer age;
     private String profileImg;
     private Timestamp createdAt;

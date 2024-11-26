@@ -24,4 +24,9 @@
         set value = #{value}, level = #{level}
         where user_id=#{userId} and fitness_type_id=#{fitnessTypeId}
     </update>
+
+    <insert id="insertDefaultFitness">
+        insert into user_fitness (point, user_id, fitness_type_id)
+        values (0, #{userId}, 1), (0, #{userId}, 2), (0, #{userId}, 3), (0, #{userId}, 4), (0, #{userId}, 5), (0, #{userId}, 6), (0, #{userId}, 7)
+    </insert>
 </mapper>

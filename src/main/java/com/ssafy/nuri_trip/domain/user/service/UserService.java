@@ -26,6 +26,7 @@ public class UserService {
     private final UserPlanRepository userPlanRepo;
     private final FitnessRepository fitnessRepo;
 
+    @Transactional
     public void register(SignUpReq signUpReq) throws BaseException{
         User findUserByUserId = userRepo.selectByUserId(signUpReq.getUserId());
         if(findUserByUserId == null){
@@ -35,8 +36,10 @@ public class UserService {
                     .password(encodedPassword)
                     .name(signUpReq.getName())
                     .age(signUpReq.getAge())
+                    .gender(signUpReq.getGender())
                     .build();
             int res = userRepo.insert(user);
+            fitnessRepo.insertDefaultFitness(user.getId());
             if(res != 1) throw new BaseException(DATABASE_ERROR);
         }else{
             throw new BaseException(POST_USERS_EXISTS_ID);
