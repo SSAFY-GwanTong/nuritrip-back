@@ -52,4 +52,16 @@
         GROUP BY
             m.id
     </select>
+    <select id="selectMissionId" resultType="int">
+        SELECT id
+        FROM mission
+        WHERE attraction_id = #{attractionId}
+            LIMIT 1
+    </select>
+
+    <!-- 미션 삽입 쿼리 -->
+    <insert id="insert">
+        INSERT INTO user_mission (status, user_id, user_plan_id, mission_id)
+        VALUES (0, #{userId}, #{userPlanId}, #{missionId})
+    </insert>
 </mapper>

@@ -109,8 +109,14 @@ public class UserService {
                                 .build();
         userPlanRepo.insertPlan(plan);
         Long userPlanId = plan.getId();
-        int res = userPlanRepo.insertDetailPlans(userPlanId, registerPlanReq.getDetailPlan());
+        List<PostDetailPlan> detailPlans = registerPlanReq.getDetailPlan();
+        int res = userPlanRepo.insertDetailPlans(userPlanId, detailPlans);
         System.out.println("detail plan : " + res + "개 들어감");
+        for(PostDetailPlan detailPlan : detailPlans){
+            int missionId = userMissionRepo.selectMissionId(detailPlan.getAttractionId());
+            userMissionRepo.insert(userId, userPlanId, missionId);
+        }
+
     }
 
     public List<Fitness> getFitness(Long userId) throws BaseException{
