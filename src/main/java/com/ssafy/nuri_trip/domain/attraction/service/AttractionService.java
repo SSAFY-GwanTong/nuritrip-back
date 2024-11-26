@@ -31,11 +31,16 @@ public class AttractionService {
     }
 
 
-    public List<Attraction> getAttractionsByConditions(Integer sido, Integer gugun, Integer contentTypeId) throws BaseException {
-        List<Attraction> attractions = attractionRepo.selectAttractionsByConditions(sido, gugun, contentTypeId);
-        if (attractions == null || attractions.isEmpty()) {
-            throw new BaseException(ATTRACTION_NOT_FOUND);
-        }
+//    public List<Attraction> getAttractionsByConditions(Integer sido, Integer gugun, Integer contentTypeId) throws BaseException {
+//        List<Attraction> attractions = attractionRepo.selectAttractionsByConditions(sido, gugun, contentTypeId);
+//        if (attractions == null || attractions.isEmpty()) {
+//            throw new BaseException(ATTRACTION_NOT_FOUND);
+//        }
+//        return attractions;
+//    }
+
+    public List<Attraction> getAttractions(int pageSize, int offset, Integer sido, Integer gugun, Integer contentTypeId) throws BaseException {
+        List<Attraction> attractions = attractionRepo.selectAttractions(pageSize, offset, sido, gugun, contentTypeId);
         return attractions;
     }
 }

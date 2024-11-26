@@ -39,7 +39,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
             Map<String, String> map = new HashMap<>();
             //redirectURI는 로그인 후 다시 원래 페이지로 돌아가기 위함이다.
-            map.put("requestURI", "/auth/signin?redirectURI="+requestURI);
+            map.put("requestURI", "/signin?redirectURI="+requestURI);
             String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
             response.getWriter().write(json);
 

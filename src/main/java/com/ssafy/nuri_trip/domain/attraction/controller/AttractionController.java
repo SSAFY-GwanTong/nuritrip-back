@@ -42,12 +42,29 @@ public class AttractionController extends AbstractRestController {
     /**
      * 특정 조건으로 관광지 조회
      */
+//    @GetMapping
+//    public ResponseEntity<BaseResponse<?>> getAttractionsByConditions(@RequestParam(required = false) Integer sido,
+//                                                                       @RequestParam(required = false) Integer gugun,
+//                                                                       @RequestParam(name="content", required = false) Integer contentTypeId) {
+//        try {
+//            List<Attraction> attractions = service.getAttractionsByConditions(sido, gugun, contentTypeId);
+//            return handleSuccess(attractions);
+//        } catch (BaseException e) {
+//            return handleException(e.getStatus());
+//        }
+//    }
+
+    /**
+     * 무한 스크롤
+     */
     @GetMapping
-    public ResponseEntity<BaseResponse<?>> getAttractionsByConditions(@RequestParam(required = false) Integer sido,
-                                                                       @RequestParam(required = false) Integer gugun,
-                                                                       @RequestParam(name="content", required = false) Integer contentTypeId) {
+    public ResponseEntity<BaseResponse<?>> getAttractions(@RequestParam(name="page_size") int pageSize,
+                                                          @RequestParam(name="offset") int offset,
+                                                          @RequestParam(required = false) Integer sido,
+                                                          @RequestParam(required = false) Integer gugun,
+                                                          @RequestParam(name="content", required = false) Integer contentTypeId) {
         try {
-            List<Attraction> attractions = service.getAttractionsByConditions(sido, gugun, contentTypeId);
+            List<Attraction> attractions = service.getAttractions(pageSize, offset, sido, gugun, contentTypeId);
             return handleSuccess(attractions);
         } catch (BaseException e) {
             return handleException(e.getStatus());
