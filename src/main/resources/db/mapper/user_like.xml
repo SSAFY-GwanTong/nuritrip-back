@@ -14,7 +14,7 @@
     </delete>
 
     <select id="isLiked" resultType="boolean">
-        SELECT COUNT(*)
+        SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
         FROM user_like
         WHERE user_id = #{userId} AND attraction_id = #{contentId}
     </select>
