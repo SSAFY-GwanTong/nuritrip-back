@@ -1,5 +1,6 @@
 package com.ssafy.nuri_trip.domain.user.controller;
 
+import com.ssafy.nuri_trip.domain.attraction.dto.Attraction;
 import com.ssafy.nuri_trip.domain.user.dto.*;
 import com.ssafy.nuri_trip.domain.user.service.UserService;
 import com.ssafy.nuri_trip.global.common.BaseException;
@@ -132,6 +133,16 @@ public class UserController extends AbstractRestController {
             req.setUserId(userId);
             service.updateFitnessMeasurement(req);
             return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
+
+    @GetMapping("/my/likes")
+    public ResponseEntity<BaseResponse<?>> getLikes(@RequestAttribute("userId") Long userId){
+        try{
+            List<Attraction> result = service.getAllLiked(userId);
+            return handleSuccess(result);
         }catch(BaseException e){
             return handleException(e.getStatus());
         }
