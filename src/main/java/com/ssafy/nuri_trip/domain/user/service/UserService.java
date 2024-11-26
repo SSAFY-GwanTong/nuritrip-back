@@ -1,7 +1,9 @@
 package com.ssafy.nuri_trip.domain.user.service;
 
+import com.ssafy.nuri_trip.domain.attraction.dto.Attraction;
 import com.ssafy.nuri_trip.domain.user.dto.*;
 import com.ssafy.nuri_trip.domain.user.repository.FitnessRepository;
+import com.ssafy.nuri_trip.domain.user.repository.UserLikeRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserMissionRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserPlanRepository;
 import com.ssafy.nuri_trip.domain.user.repository.UserRepository;
@@ -25,6 +27,7 @@ public class UserService {
     private final UserMissionRepository userMissionRepo;
     private final UserPlanRepository userPlanRepo;
     private final FitnessRepository fitnessRepo;
+    private final UserLikeRepository userLikeRepo;
 
     @Transactional
     public void register(SignUpReq signUpReq) throws BaseException{
@@ -152,4 +155,8 @@ public class UserService {
         fitnessRepo.updateFitnessMeasurement(req);
     }
 
+    public List<Attraction> getAllLiked(Long userId) throws BaseException {
+        List<Attraction> attractions = userLikeRepo.selectAllLikedByUserId(userId);
+        return attractions;
+    }
 }
