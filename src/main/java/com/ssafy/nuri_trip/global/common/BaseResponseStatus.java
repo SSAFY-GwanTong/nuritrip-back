@@ -35,6 +35,9 @@ public enum BaseResponseStatus {
 
     // missions
     MISSION_NOT_FOUND(false, HttpStatus.NOT_FOUND.value(),"미션이 존재하지 않습니다."),
+    
+    //attractions
+    ATTRACTION_NOT_FOUND(false, HttpStatus.NOT_FOUND.value(), "관광지를 찾을 수 없습니다."),
 
 
     /**
