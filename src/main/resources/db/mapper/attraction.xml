@@ -36,26 +36,47 @@
 
 
     <!-- 특정 조건으로 Attraction 조회 -->
-    <select id="selectAttractionsByConditions"  resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
-        SELECT 
-            content_id as contentId, latitude, longitude, title, first_image2 as img, addr1 as address1, addr2 as address2,
-            ct.content_type_name as contentType
+<!--    <select id="selectAttractionsByConditions"  resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">-->
+<!--        SELECT -->
+<!--            content_id as contentId, latitude, longitude, title, first_image1 as img, addr1 as address1, addr2 as address2,-->
+<!--            ct.content_type_name as contentType-->
+<!--        FROM attractions a-->
+<!--        LEFT JOIN contenttypes ct ON a.content_type_id=ct.content_type_id-->
+<!--        WHERE-->
+<!--            1=1-->
+<!--            <if test="sido == null">-->
+<!--                AND a.area_code =1-->
+<!--            </if>-->
+<!--            <if test="sido != null">-->
+<!--                AND a.area_code = #{sido}-->
+<!--            </if>-->
+<!--            <if test="gugun != null">-->
+<!--                AND a.si_gun_gu_code = #{gugun}-->
+<!--            </if>-->
+<!--            <if test="contentTypeId != null">-->
+<!--                AND a.content_type_id = #{contentTypeId}-->
+<!--            </if>-->
+<!--    </select>-->
+    <select id="selectAttractions"  resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
+        SELECT
+        content_id as contentId, latitude, longitude, title, first_image1 as img, addr1 as address1, addr2 as address2,
+        ct.content_type_name as contentType
         FROM attractions a
         LEFT JOIN contenttypes ct ON a.content_type_id=ct.content_type_id
         WHERE
-            1=1
-            <if test="sido == null">
-                AND a.area_code =1
-            </if>
-            <if test="sido != null">
-                AND a.area_code = #{sido}
-            </if>
-            <if test="gugun != null">
-                AND a.si_gun_gu_code = #{gugun}
-            </if>
-            <if test="contentTypeId != null">
-                AND a.content_type_id = #{contentTypeId}
-            </if>
+        1=1
+        <if test="sido == null">
+            AND a.area_code =1
+        </if>
+        <if test="sido != null">
+            AND a.area_code = #{sido}
+        </if>
+        <if test="gugun != null">
+            AND a.si_gun_gu_code = #{gugun}
+        </if>
+        <if test="contentTypeId != null">
+            AND a.content_type_id = #{contentTypeId}
+        </if>
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
-
 </mapper>
