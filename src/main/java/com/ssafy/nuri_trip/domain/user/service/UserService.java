@@ -159,4 +159,12 @@ public class UserService {
         List<Attraction> attractions = userLikeRepo.selectAllLikedByUserId(userId);
         return attractions;
     }
+
+    public void like(Long userId, int contentId) throws BaseException{
+        boolean isLiked = userLikeRepo.isLiked(userId, contentId);
+        if(isLiked){
+            userLikeRepo.unlike(userId, contentId);
+        }
+        userLikeRepo.like(userId, contentId);
+    }
 }

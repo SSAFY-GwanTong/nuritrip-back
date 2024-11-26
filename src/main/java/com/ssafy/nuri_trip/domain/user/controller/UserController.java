@@ -147,4 +147,15 @@ public class UserController extends AbstractRestController {
             return handleException(e.getStatus());
         }
     }
+
+    @PostMapping("/attractions/{contentId}/like")
+    public ResponseEntity<BaseResponse<?>> like(@RequestAttribute("userId") Long userId,
+                                                @PathVariable("contentId") int contentId){
+        try{
+            service.like(userId, contentId);
+            return handleSuccess(null);
+        }catch(BaseException e){
+            return handleException(e.getStatus());
+        }
+    }
 }
