@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.nuri_trip.domain.attraction.mapper.AttractionMapper">
+<mapper namespace="com.ssafy.nuri_trip.domain.attraction.repository.AttractionRepository">
 
     <!-- ResultMap 정의 -->
-    <resultMap id="AttractionResultMap" type="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
+    <resultMap id="AttractionDetailResultMap" type="com.ssafy.nuri_trip.domain.attraction.dto.AttractionDetail">
         <id property="contentId" column="content_id" />
         <result property="title" column="title" />
-        <result property="address" column="address" />
-        <result property="latitude" column="latitude" />
-        <result property="longitude" column="longitude" />
+        <result property="img" column="first_image2" />
+        <result property="tel" column="tel" />
+        <result property="address1" column="addr1" />
+        <result property="address2" column="addr2" />
+        <result property="overview" column="overview" />
+        <result property="likes" column="likes" />
+
     </resultMap>
 
-    <!-- Attraction ID로 조회 -->
-    <select id="getAttractionById" resultMap="AttractionResultMap" parameterType="int">
-        SELECT 
-            content_id, title, address, latitude, longitude
-        FROM 
-            attraction
-        WHERE 
-            content_id = #{attractionId}
+    <select id="selectAttractionById" resultMap="AttractionDetailResultMap">
+        SELECT
+            a.content_id, title, first_image2, tel, addr1, addr2, overview,
+            COUNT(ul.id) AS likes
+        FROM attractions a
+        LEFT JOIN user_like ul ON a.content_id = ul.attraction_id
+        WHERE a.content_id = #{contentId}
+        GROUP BY a.content_id;
     </select>
 
-    <!-- Gugun Code로 Attraction 조회 -->
-    <select id="getAttractionsByGugunCode" resultMap="AttractionResultMap" parameterType="int">
-        SELECT 
-            content_id, title, address, latitude, longitude
-        FROM 
-            attraction
-        WHERE 
-            gugun_code = #{gugunCode}
+    <select id="selectGugunBySidoCode" resultType="com.ssafy.nuri_trip.domain.attraction.dto.Gugun">
+        select gugun_code As gugunCode, gugun_name As name
+        from guguns
+        where sido_code=#{sidoCode}
     </select>
+
+
+
 
     <!-- 특정 조건으로 Attraction 조회 -->
-    <select id="getAttractionsByConditions" resultMap="AttractionResultMap" parameterType="map">
+    <select id="selectAttractionsByConditions"  resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
         SELECT 
-            content_id, title, address, latitude, longitude
-        FROM 
-            attraction
-        WHERE 
+            content_id as contentId, latitude, longitude, title, first_image2 as img, addr1 as address1, addr2 as address2,
+            ct.content_type_name as contentType
+        FROM attractions a
+        LEFT JOIN contenttypes ct ON a.content_type_id=ct.content_type_id
+        WHERE
             1=1
+            <if test="sido == null">
+                AND a.area_code =1
+            </if>
             <if test="sido != null">
-                AND sido_code = #{sido}
+                AND a.area_code = #{sido}
             </if>
             <if test="gugun != null">
-                AND gugun_code = #{gugun}
+                AND a.si_gun_gu_code = #{gugun}
             </if>
-            <if test="content != null">
-                AND content_type_id = #{content}
+            <if test="contentTypeId != null">
+                AND a.content_type_id = #{contentTypeId}
             </if>
     </select>
 
