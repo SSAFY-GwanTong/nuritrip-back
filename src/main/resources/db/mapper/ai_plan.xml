@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.nuri_trip.domain.ai.repository.AiPlanRepository">
+
+    <resultMap id="AiPlanBase" type="com.ssafy.nuri_trip.domain.ai.dto.AiPlan">
+        <id property="id" column="id" />
+        <result property="level" column="level" />
+        <result property="area_code" column="areaCode" />
+    </resultMap>
+
+    <resultMap id="PossiblePlanBase" type="com.ssafy.nuri_trip.domain.ai.dto.PossibleAiPlan">
+        <id property="ai_plan_id" column="aiPlanId" />
+        <result property="day" column="day" />
+    </resultMap>
+
+
+    <resultMap id="AiPlanDetailBase" type="com.ssafy.nuri_trip.domain.ai.dto.AiPlanDetail">
+        <id property="id" column="id" />
+        <result property="day" column="day" />
+        <result property="sequence" column="sequence" />
+        <result property="ai_plan_id" column="aiPlanId" />
+        <result property="attraction_id" column="attractionId" />
+        <result property="content" column="content" />
+    </resultMap>
+
+    <select id="selectAllByLevelAndAreaCode" resultMap="AiPlanBase">
+
+            `level` = #{level} and
+            `area_code` = #{areaCode}
+    </select>
+
+<!--    <select id="selectPossiblePlanListByLevelAndAreaCode" resultType="com.ssafy.nuri_trip.domain.ai.dto.PossibleAiPlan">-->
+<!--        SELECT-->
+<!--        b.ai_plan_id as ai_plan_id, max(b.day) day-->
+<!--        FROM-->
+<!--        ai_plan a right outer join ai_detail_plan b-->
+<!--        on a.id = b.ai_plan_id-->
+<!--        where-->
+<!--        a.`level` = #{level} and-->
+<!--        a.`area_code` = #{areaCode}-->
+<!--    </select>-->
+
+
+    <select id="selectPossiblePlanListByLevelAndAreaCode" resultMap="PossiblePlanBase">
+        SELECT
+            b.ai_plan_id as ai_plan_id, max(b.day) day
+        FROM
+            ai_plan a right outer join ai_detail_plan b
+        on a.id = b.ai_plan_id
+        where
+            a.`level` &gt;= #{level} and
+            a.`area_code` = #{areaCode}
+        group by ai_plan_id
+    </select>
+
+    <select id="selectAiPlanDetailListByAiPlanId" resultMap="AiPlanDetailBase">
+        SELECT
+            id, day, sequence, ai_plan_id, attraction_id, content
+        FROM
+            ai_detail_plan b
+        where
+            day &lt;=#{day} and
+            ai_plan_id = #{aiPlanId}
+    </select>
+</mapper>

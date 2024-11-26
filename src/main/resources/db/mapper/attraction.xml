@@ -33,6 +33,17 @@
     </select>
 
 
+    <select id="selectAttractionByIdList"  parameterType="list" resultMap="AttractionDetailResultMap">
+       select *
+       from attractions
+       where content_id IN
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
 
 
     <!-- 특정 조건으로 Attraction 조회 -->
