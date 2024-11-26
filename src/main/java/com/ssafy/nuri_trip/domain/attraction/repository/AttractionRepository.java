@@ -12,5 +12,5 @@ public interface AttractionRepository {
     AttractionDetail selectAttractionById(int contentId);
     List<Gugun> selectGugunBySidoCode(int sidoCode);
     //List<Attraction> selectAttractionsByConditions(Integer sido, Integer gugun, Integer contentTypeId);
-    List<Attraction> selectAttractions(int pageSize, int offset, Integer sido, Integer gugun, Integer contentTypeId);
+    List<Attraction> selectAttractions(Long userId, int pageSize, int offset, Integer sido, Integer gugun, Integer contentTypeId);
 }

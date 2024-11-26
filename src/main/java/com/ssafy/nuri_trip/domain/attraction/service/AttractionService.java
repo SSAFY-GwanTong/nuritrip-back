@@ -39,8 +39,8 @@ public class AttractionService {
 //        return attractions;
 //    }
 
-    public List<Attraction> getAttractions(int pageSize, int offset, Integer sido, Integer gugun, Integer contentTypeId) throws BaseException {
-        List<Attraction> attractions = attractionRepo.selectAttractions(pageSize, offset, sido, gugun, contentTypeId);
+    public List<Attraction> getAttractions(Long userId, int pageSize, int offset, Integer sido, Integer gugun, Integer contentTypeId) throws BaseException {
+        List<Attraction> attractions = attractionRepo.selectAttractions(userId, pageSize, offset, sido, gugun, contentTypeId);
         return attractions;
     }
 }
