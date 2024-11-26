@@ -53,7 +53,7 @@ public class UserController extends AbstractRestController {
         }
     }
 
-    @PatchMapping("/my/missions/{mission_id}/status/{status}")
+    @PutMapping("/my/missions/{mission_id}/status/{status}")
     public ResponseEntity<BaseResponse<?>> updateMissionStatus(@RequestAttribute("userId") Long userId,
                                                                @PathVariable("mission_id") Long missionId,
                                                                @PathVariable("status") boolean status){
