@@ -160,11 +160,14 @@ public class UserService {
         return attractions;
     }
 
+    @Transactional
     public void like(Long userId, int contentId) throws BaseException{
         boolean isLiked = userLikeRepo.isLiked(userId, contentId);
+        System.out.println("좋아요 여부: "+isLiked);
         if(isLiked){
             userLikeRepo.unlike(userId, contentId);
+        } else {
+            userLikeRepo.like(userId, contentId);
         }
-        userLikeRepo.like(userId, contentId);
     }
 }
