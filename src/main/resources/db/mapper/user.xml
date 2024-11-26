@@ -12,6 +12,7 @@
         <result column="name" property="name"/>
         <result column="strength_level" property="strengthLevel"/>
         <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
         <result column="profile_img" property="profileImg"/>
         <result column="created_at" property="createdAt"/>
         <result column="updated_at" property="updatedAt"/>
@@ -19,7 +20,7 @@
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into user (user_id, password, name, age)
-        values(#{userId}, #{password}, #{name}, #{age})
+        insert into user (user_id, password, name, age, gender)
+        values(#{userId}, #{password}, #{name}, #{age}, #{gender})
     </insert>
 </mapper>

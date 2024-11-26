@@ -13,4 +13,5 @@ public interface FitnessRepository {
     FitnessType selectFitnessTypeById(int typeId);
     int insertFitnessMeasurement(FitnessMeasurementReq req);
     int updateFitnessMeasurement(FitnessMeasurementReq req);
+    int insertDefaultFitness(Long userId);
 }
