@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AiPlan {
-
+public class PossibleAiPlan {
+    int aiPlanId;
+    int day;
 }
