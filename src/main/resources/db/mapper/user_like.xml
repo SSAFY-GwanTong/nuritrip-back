@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.nuri_trip.domain.user.repository.UserLikeRepository">
+
+
+    <insert id="like">
+        INSERT INTO user_like (user_id, attraction_id)
+        VALUES (#{userId}, #{contentId})
+    </insert>
+
+    <delete id="unlike">
+        DELETE FROM user_like
+        WHERE user_id = #{userId} AND attraction_id = #{contentId}
+    </delete>
+
+    <select id="isLiked" resultType="boolean">
+        SELECT COUNT(*)
+        FROM user_like
+        WHERE user_id = #{userId} AND attraction_id = #{contentId}
+    </select>
+
+
+    <select id="selectAllLikedByUserId" resultType="com.ssafy.nuri_trip.domain.attraction.dto.Attraction">
+    SELECT
+        a.content_id AS contentId,
+        a.latitude,
+        a.longitude,
+        a.title,
+        a.first_image1 AS img,
+        a.addr1 AS address1,
+        a.addr2 AS address2,
+        ct.content_type_name AS contentType,
+        True AS isLiked
+    FROM
+        user_like ul
+    JOIN
+        attractions a ON ul.attraction_id = a.content_id
+    JOIN
+        contenttypes ct ON a.content_type_id = ct.content_type_id
+    WHERE
+        ul.user_id = #{userId}
+    </select>
+</mapper>
