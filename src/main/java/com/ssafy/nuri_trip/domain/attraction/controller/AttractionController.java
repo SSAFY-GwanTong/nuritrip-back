@@ -6,6 +6,7 @@ import com.ssafy.nuri_trip.domain.attraction.dto.Gugun;
 import com.ssafy.nuri_trip.domain.attraction.service.AttractionService;
 import com.ssafy.nuri_trip.global.common.BaseException;
 import com.ssafy.nuri_trip.global.common.BaseResponse;
+import com.ssafy.nuri_trip.global.config.NoAuth;
 import com.ssafy.nuri_trip.global.controller.AbstractRestController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 public class AttractionController extends AbstractRestController {
     private final AttractionService service;
 
+    @NoAuth
     @GetMapping("/{contentId}")
     public ResponseEntity<BaseResponse<?>> getAttractionById(@PathVariable int contentId) {
         try {
@@ -29,6 +31,7 @@ public class AttractionController extends AbstractRestController {
         }
     }
 
+    @NoAuth
     @GetMapping("/guguns")
     public ResponseEntity<BaseResponse<?>> getGuguns(@RequestParam("sido") int sidoCode){
         try{
